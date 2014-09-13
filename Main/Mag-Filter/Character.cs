@@ -2,21 +2,21 @@
 
 namespace MagFilter
 {
-	struct Character
-	{
-		public readonly int Id;
+  struct Character
+  {
+    public readonly int Id;
 
-		public readonly string Name;
+    public readonly string Name;
 
-		public readonly TimeSpan DeleteTimeout;
+    public readonly TimeSpan DeleteTimeout;
 
-		public Character(int id, string name, int timeout)
-		{
-			Id = id;
+    public Character(int id, string name, int timeout)
+    {
+      Id = id;
 
-			Name = name;
+      Name = name;
 
-			DeleteTimeout = TimeSpan.FromSeconds(timeout);
-		}
-	}
+      DeleteTimeout = TimeSpan.FromSeconds(timeout);
+    }
+  }
 }
