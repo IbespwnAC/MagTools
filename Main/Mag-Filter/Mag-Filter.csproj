@@ -31,7 +31,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="Decal.Adapter">
-      <HintPath>..\..\..\..\appx64\Turbine\decal\Decal.Adapter.dll</HintPath>
+      <HintPath>..\..\..\..\games\decal\Decal.Adapter.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
