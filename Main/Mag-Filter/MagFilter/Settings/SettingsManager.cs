@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Xml;
-
-using Mag.Shared.Settings;
-
-namespace MagFilter.Settings
+﻿namespace MagFilter.Settings
 {
-	static class SettingsManager
+    using Mag.Shared.Settings;
+    using MagFilter;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Xml;
+
+    internal static class SettingsManager
 	{
 		public static class CharacterSelectionScreen
 		{
