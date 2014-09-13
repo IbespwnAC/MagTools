@@ -51,7 +51,13 @@
       }
       else if (lower.StartsWith("/mf lncbi set "))
       {
-        nextCharByInt = int.Parse(lower.Substring(14, lower.Length - 14));
+        if (!int.TryParse(lower.Substring(14, lower.Length - 14), out nextCharByInt))
+        {
+          Debug.WriteToChat("LoginNextCharacterByIndex failed with invalid input: {" + lower + "}");
+
+          return;
+        }
+        
         if (nextCharByInt > 10)
         {
           nextCharByInt = -1;
