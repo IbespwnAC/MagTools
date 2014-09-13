@@ -182,3 +182,7 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+# bin/obj/config folders
+bin
+obj
+config
