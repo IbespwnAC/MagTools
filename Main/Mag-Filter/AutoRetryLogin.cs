@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Mag.Shared;
+
 using Decal.Adapter;
 
 namespace MagFilter
@@ -17,6 +19,8 @@ namespace MagFilter
 		{
 			if (e.Message.Type == 0xF7C8) // Enter Game - Big Login button clicked
 			{
+                Debug.LogText("I hit the \"Enter Game\" Button!  Yay!");
+                
 				loginRetryTimer.Interval = 1;
 				loginRetryTimer.Stop();
 			}
@@ -26,6 +30,7 @@ namespace MagFilter
 		{
 			if (e.Message.Type == 0xF659) // One of your characters is still in the world. Please try again in a few minutes.
 			{
+        Debug.LogText("One of my characters is still in the world =(");
 				loginRetryTimer.Interval = 100;
 				loginRetryTimer.Start();
 			}
