@@ -36,9 +36,8 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Global.cs" />
     <Compile Include="MagFilter\DefaultFirstCharacterManager.cs" />
+    <Compile Include="MagFilter\OnLoginCompleteMessageQueueManager.cs" />
     <Compile Include="Mag\Shared\PostMessageTools.cs" />
     <Compile Include="MagFilter\Settings\SettingsManager.cs" />
     <Compile Include="MagFilter\Character.cs" />
