@@ -19,7 +19,7 @@ namespace MagFilter
     {
       this.loginCharacterTools = loginCharacterTools;
 
-            nextCharByInt = -1;
+      nextCharByInt = -1;
 
       loginNextCharTimer.Tick += new EventHandler(defaultFirstCharTimer_Tick);
       loginNextCharTimer.Interval = 1000;
@@ -56,13 +56,13 @@ namespace MagFilter
         nextCharByInt = int.Parse(lower.Substring(14, lower.Length - 14));
         
         if (nextCharByInt > 10)
-                {
-                    nextCharByInt = -1;
+        {
+          nextCharByInt = -1;
           Debug.WriteToChat("Login Next Character failed with input too large: " + nextCharByInt);
         }
         else if (nextCharByInt < 0)
-                {
-                    nextCharByInt = -1;
+        {
+          nextCharByInt = -1;
           Debug.WriteToChat("Login Next Character failed with input too small: " + nextCharByInt);
         }
         else
@@ -86,7 +86,7 @@ namespace MagFilter
         }
         else if (nextCharByInt >= 0 && nextCharByInt <= 10) {
           loginCharacterTools.LoginByIndex(nextCharByInt);
-                    nextCharByInt = -1;
+          nextCharByInt = -1;
         }
       }
       catch (Exception ex) { Debug.LogException(ex); }
