@@ -1,1 +1,0 @@
-C:\dev\MagFilterExtended\Main\Mag-Filter\obj\Debug\Mag-Filter.csprojResolveAssemblyReference.cache
