@@ -1,81 +1,81 @@
 ﻿namespace MagFilter
 {
-    using Decal.Adapter;
-    using Mag.Shared;
-    using System;
-    using System.Collections.Generic;
+  using Decal.Adapter;
+  using Mag.Shared;
+  using System;
+  using System.Collections.Generic;
 
-    internal class LoginCharacterTools
+  internal class LoginCharacterTools
+  {
+    int characterSlots;
+
+    readonly List<Character> characters = new List<Character>();
+
+    internal void FilterCore_ServerDispatch(object sender, NetworkMessageEventArgs e)
     {
-		int characterSlots;
+      if (e.Message.Type == 0xF658) // Character List
+      {
+        characterSlots = Convert.ToInt32(e.Message["slotCount"]);
 
-		readonly List<Character> characters = new List<Character>();
+        characters.Clear();
 
-		internal void FilterCore_ServerDispatch(object sender, NetworkMessageEventArgs e)
-		{
-			if (e.Message.Type == 0xF658) // Character List
-			{
-				characterSlots = Convert.ToInt32(e.Message["slotCount"]);
+        MessageStruct charactersStruct = e.Message.Struct("characters");
 
-				characters.Clear();
+        for (int i = 0; i < charactersStruct.Count; i++)
+        {
+          int character = Convert.ToInt32(charactersStruct.Struct(i)["character"]);
+          string name = Convert.ToString(charactersStruct.Struct(i)["name"]);
+          int deleteTimeout = Convert.ToInt32(charactersStruct.Struct(i)["deleteTimeout"]);
 
-				MessageStruct charactersStruct = e.Message.Struct("characters");
+          characters.Add(new Character(character, name, deleteTimeout));
+        }
 
-				for (int i = 0; i < charactersStruct.Count; i++)
-				{
-					int character = Convert.ToInt32(charactersStruct.Struct(i)["character"]);
-					string name = Convert.ToString(charactersStruct.Struct(i)["name"]);
-					int deleteTimeout = Convert.ToInt32(charactersStruct.Struct(i)["deleteTimeout"]);
+        characters.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
+      }
+    }
 
-					characters.Add(new Character(character, name, deleteTimeout));
-				}
+    public bool LoginCharacter(int id)
+    {
+      for (int i = 0 ; i< characters.Count ;i++)
+      {
+        if (characters[i].Id == id)
+          return LoginByIndex(i);
+      }
 
-				characters.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
-			}
-		}
+      return false;
+    }
 
-		public bool LoginCharacter(int id)
-		{
-			for (int i = 0 ; i< characters.Count ;i++)
-			{
-				if (characters[i].Id == id)
-					return LoginByIndex(i);
-			}
+    public bool LoginCharacter(string name)
+    {
+      for (int i = 0; i < characters.Count; i++)
+      {
+        if (String.Compare(characters[i].Name, name, StringComparison.OrdinalIgnoreCase) == 0)
+          return LoginByIndex(i);
+      }
 
-			return false;
-		}
+      return false;
+    }
 
-		public bool LoginCharacter(string name)
-		{
-			for (int i = 0; i < characters.Count; i++)
-			{
-				if (String.Compare(characters[i].Name, name, StringComparison.OrdinalIgnoreCase) == 0)
-					return LoginByIndex(i);
-			}
+    private const int XPixelOffset = 121;
+    private const int YTopOfBox = 209;
+    private const int YBottomOfBox = 532;
 
-			return false;
-		}
+    public bool LoginByIndex(int index)
+    {
+      if (index >= characters.Count)
+        return false;
 
-		private const int XPixelOffset = 121;
-		private const int YTopOfBox = 209;
-		private const int YBottomOfBox = 532;
+      float characterNameSize = (YBottomOfBox - YTopOfBox) / (float)characterSlots;
 
-		public bool LoginByIndex(int index)
-		{
-			if (index >= characters.Count)
-				return false;
+      int yOffset = (int)(YTopOfBox + (characterNameSize / 2) + (characterNameSize * index));
 
-			float characterNameSize = (YBottomOfBox - YTopOfBox) / (float)characterSlots;
+      // Select the character
+      Mag.Shared.PostMessageTools.SendMouseClick(XPixelOffset, yOffset);
 
-			int yOffset = (int)(YTopOfBox + (characterNameSize / 2) + (characterNameSize * index));
+      // Click the Enter button
+      Mag.Shared.PostMessageTools.SendMouseClick(0x015C, 0x0185);
 
-			// Select the character
-			Mag.Shared.PostMessageTools.SendMouseClick(XPixelOffset, yOffset);
-
-			// Click the Enter button
-			Mag.Shared.PostMessageTools.SendMouseClick(0x015C, 0x0185);
-
-			return true;
-		}
-	}
+      return true;
+    }
+  }
 }
